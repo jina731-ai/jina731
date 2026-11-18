@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전월세 전환 계산기 | 생활 계산기 모음</title>
+<meta name="description" content="전세 보증금을 월세로, 월세를 보증금으로 바꿀 때 금액을 법정 전환율로 계산합니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="생활 계산기 모음">
+<meta property="og:title" content="전월세 전환 계산기 | 생활 계산기 모음">
+<meta property="og:description" content="전세 보증금을 월세로, 월세를 보증금으로 바꿀 때 금액을 법정 전환율로 계산합니다.">
+<meta property="og:locale" content="ko_KR">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:4px 16px 40px;background:#f6f8fa}
+.site-nav{max-width:560px;margin:16px auto 0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+.site-nav a{color:#1f6feb;text-decoration:none;font-weight:600}
+.site-nav a:hover{text-decoration:underline}
+.site-foot{max-width:760px;margin:24px auto 0;text-align:center;color:#8a95a3;font:12px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a href="./">← 전체 계산기 보기</a></nav>
+<div class="ms-calc" id="ms-rent">
+<style>
+.ms-calc{--ms-accent:#1f6feb;--ms-soft:#f4f7fb;--ms-line:#dde3ea;--ms-text:#1d2733;--ms-muted:#5f6b7a;--ms-warn:#b54708;max-width:560px;margin:24px auto;padding:20px;border:1px solid var(--ms-line);border-radius:14px;background:#fff;color:var(--ms-text);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;font-size:15px;line-height:1.5;box-sizing:border-box}
+.ms-calc *{box-sizing:border-box}.ms-calc [hidden]{display:none!important}
+.ms-calc h3{margin:0 0 4px;font-size:20px}
+.ms-calc .ms-sub{margin:0 0 16px;color:var(--ms-muted);font-size:13px}
+.ms-calc .ms-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.ms-calc label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.ms-calc input,.ms-calc select{width:100%;padding:10px 12px;border:1px solid var(--ms-line);border-radius:8px;font-size:16px;background:#fff;color:var(--ms-text);font-family:inherit}
+.ms-calc input:focus,.ms-calc select:focus{outline:2px solid var(--ms-accent);outline-offset:-1px;border-color:transparent}
+.ms-calc .ms-seg{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.ms-calc .ms-seg button{flex:1;padding:9px 6px;border:1px solid var(--ms-line);border-radius:8px;background:#fff;font-size:14px;cursor:pointer;color:var(--ms-text);font-family:inherit}
+.ms-calc .ms-seg button[aria-pressed="true"]{background:var(--ms-accent);border-color:var(--ms-accent);color:#fff;font-weight:600}
+.ms-calc .ms-result{margin-top:16px;padding:16px;border-radius:10px;background:var(--ms-soft)}
+.ms-calc .ms-label{font-size:13px;color:var(--ms-muted)}
+.ms-calc .ms-big{font-size:26px;font-weight:700;color:var(--ms-accent);font-variant-numeric:tabular-nums}
+.ms-calc .ms-msg{font-size:13.5px;margin-top:4px}
+.ms-calc table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.ms-calc th{font-size:12px;color:var(--ms-muted);font-weight:600;text-align:right;padding:4px 0}
+.ms-calc td{padding:7px 0;border-top:1px solid var(--ms-line);text-align:right;font-variant-numeric:tabular-nums}
+.ms-calc th:first-child,.ms-calc td:first-child{text-align:left}
+.ms-calc .ms-note{margin-top:12px;font-size:12.5px;color:var(--ms-muted)}
+@media (max-width:480px){.ms-calc{padding:16px;margin:16px 0}.ms-calc .ms-row{grid-template-columns:1fr}}
+</style>
+
+<h3>전월세 전환 계산기</h3>
+<p class="ms-sub">전세를 월세로, 월세를 전세로 바꿀 때 적정 금액을 계산합니다.</p>
+
+<div class="ms-seg" data-seg="mode" role="group">
+  <button type="button" data-v="j2w" aria-pressed="true">전세 → 월세</button>
+  <button type="button" data-v="w2j" aria-pressed="false">월세 → 전세</button>
+</div>
+
+<div class="ms-row" id="rt-j2w">
+  <div><label for="rt-jeonse">전세 보증금 (원)</label><input id="rt-jeonse" class="ms-money" type="text" inputmode="numeric" value="300,000,000"></div>
+  <div><label for="rt-dep">바꾼 뒤 월세 보증금 (원)</label><input id="rt-dep" class="ms-money" type="text" inputmode="numeric" value="100,000,000"></div>
+</div>
+<div class="ms-row" id="rt-w2j" hidden>
+  <div><label for="rt-dep2">월세 보증금 (원)</label><input id="rt-dep2" class="ms-money" type="text" inputmode="numeric" value="50,000,000"></div>
+  <div><label for="rt-month">월세 (원)</label><input id="rt-month" class="ms-money" type="text" inputmode="numeric" value="1,000,000"></div>
+</div>
+<div class="ms-row">
+  <div><label for="rt-base">한국은행 기준금리 (%)</label><input id="rt-base" type="number" min="0" max="10" step="0.25" value="3.00"></div>
+  <div><label for="rt-rate">적용 전환율 (%)</label><input id="rt-rate" type="number" min="0" max="20" step="0.1" value="5.0"></div>
+</div>
+
+<div class="ms-result" aria-live="polite">
+  <div class="ms-label" id="rt-biglabel">월세</div>
+  <div class="ms-big" id="rt-out">0원</div>
+  <div class="ms-msg" id="rt-msg"></div>
+  <table>
+    <thead><tr><th>전환율</th><th id="rt-colh">월세</th></tr></thead>
+    <tbody id="rt-table"></tbody>
+  </table>
+</div>
+
+<p class="ms-note">
+· 법정 전환율 상한 = 기준금리 + 2%p (주택임대차보호법). 기준금리 3.00%(2026년 10월 기준)면 상한은 5.0%입니다. 기준금리가 바뀌면 위 칸을 고치세요.<br>
+· 이 상한은 계약 기간 중이나 갱신 때 전세를 월세로 바꾸는 경우에 적용됩니다. 새 계약은 시장 전환율(지역 평균)을 참고해 직접 입력하세요.<br>
+· 전세 → 월세: 월세 = (전세금 − 월세 보증금) × 전환율 ÷ 12. 월세 → 전세: 전세금 = 보증금 + 월세 × 12 ÷ 전환율.
+</p>
+
+<script>
+(function(){
+  var root=document.getElementById('ms-rent'); if(!root) return;
+  function $(id){return root.querySelector('#'+id);}
+  function num(v){return Number(String(v).replace(/[^0-9.]/g,''))||0;}
+  function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+  function seg(n){var b=root.querySelector('[data-seg="'+n+'"] [aria-pressed="true"]');return b?b.getAttribute('data-v'):'';}
+  function calc(){
+    var mode=seg('mode'), rate=num($('rt-rate').value)/100, cap=num($('rt-base').value)+2;
+    $('rt-j2w').hidden=mode!=='j2w'; $('rt-w2j').hidden=mode!=='w2j';
+    function f(r){ if(mode==='j2w') return Math.max(0,num($('rt-jeonse').value)-num($('rt-dep').value))*r/12; return r>0?num($('rt-dep2').value)+num($('rt-month').value)*12/r:0; }
+    $('rt-biglabel').textContent= mode==='j2w'?'적정 월세':'환산 전세 보증금';
+    $('rt-colh').textContent= mode==='j2w'?'월세':'전세 보증금';
+    $('rt-out').textContent=won(f(rate));
+    $('rt-msg').textContent='전환율 '+(rate*100).toFixed(1)+'% 적용 · 법정 상한 '+cap.toFixed(1)+'%'+(rate*100>cap+1e-9?' (상한 초과)':'');
+    var rows='';[cap-1,cap-.5,cap,cap+.5,cap+1].forEach(function(p){if(p<=0)return;rows+='<tr'+(Math.abs(p-cap)<1e-9?' style="font-weight:700"':'')+'><td>'+p.toFixed(1)+'%'+(Math.abs(p-cap)<1e-9?' (법정 상한)':'')+'</td><td>'+won(f(p/100))+'</td></tr>';});
+    $('rt-table').innerHTML=rows;
+  }
+  $('rt-base').addEventListener('input',function(){$('rt-rate').value=(num(this.value)+2).toFixed(1);});
+  root.addEventListener('click',function(e){var b=e.target.closest('.ms-seg button');if(!b)return;b.parentNode.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});calc();});
+  root.addEventListener('input',function(e){if(e.target.classList.contains('ms-money')){var n=num(e.target.value);e.target.value=n?Math.floor(n).toLocaleString('ko-KR'):'';}calc();});
+  root.addEventListener('change',calc);
+  calc();
+})();
+</script>
+</div>
+<p class="site-foot">생활 계산기 모음 · 계산 결과는 참고용 추정치입니다.</p>
+</body>
+</html>

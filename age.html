@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>만 나이 계산기 | 생활 계산기 모음</title>
+<meta name="description" content="생년월일로 만 나이, 연 나이, 다음 생일까지 남은 날과 띠를 계산합니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="생활 계산기 모음">
+<meta property="og:title" content="만 나이 계산기 | 생활 계산기 모음">
+<meta property="og:description" content="생년월일로 만 나이, 연 나이, 다음 생일까지 남은 날과 띠를 계산합니다.">
+<meta property="og:locale" content="ko_KR">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:4px 16px 40px;background:#f6f8fa}
+.site-nav{max-width:560px;margin:16px auto 0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+.site-nav a{color:#1f6feb;text-decoration:none;font-weight:600}
+.site-nav a:hover{text-decoration:underline}
+.site-foot{max-width:760px;margin:24px auto 0;text-align:center;color:#8a95a3;font:12px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a href="./">← 전체 계산기 보기</a></nav>
+<div class="ms-calc" id="ms-age">
+<style>
+.ms-calc{--ms-accent:#1f6feb;--ms-soft:#f4f7fb;--ms-line:#dde3ea;--ms-text:#1d2733;--ms-muted:#5f6b7a;--ms-warn:#b54708;max-width:560px;margin:24px auto;padding:20px;border:1px solid var(--ms-line);border-radius:14px;background:#fff;color:var(--ms-text);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;font-size:15px;line-height:1.5;box-sizing:border-box}
+.ms-calc *{box-sizing:border-box}
+.ms-calc h3{margin:0 0 4px;font-size:20px}
+.ms-calc .ms-sub{margin:0 0 16px;color:var(--ms-muted);font-size:13px}
+.ms-calc .ms-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.ms-calc label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.ms-calc input{width:100%;padding:10px 12px;border:1px solid var(--ms-line);border-radius:8px;font-size:16px;background:#fff;color:var(--ms-text);font-family:inherit}
+.ms-calc input:focus{outline:2px solid var(--ms-accent);outline-offset:-1px;border-color:transparent}
+.ms-calc .ms-result{margin-top:16px;padding:16px;border-radius:10px;background:var(--ms-soft)}
+.ms-calc .ms-label{font-size:13px;color:var(--ms-muted)}
+.ms-calc .ms-big{font-size:26px;font-weight:700;color:var(--ms-accent);font-variant-numeric:tabular-nums}
+.ms-calc .ms-msg{font-size:13.5px;margin-top:4px}
+.ms-calc table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.ms-calc td{padding:7px 0;border-top:1px solid var(--ms-line);text-align:right;font-variant-numeric:tabular-nums}
+.ms-calc td:first-child{text-align:left}
+.ms-calc .ms-note{margin-top:12px;font-size:12.5px;color:var(--ms-muted)}
+.ms-calc .ms-warn{color:var(--ms-warn);font-weight:600}
+@media (max-width:480px){.ms-calc{padding:16px;margin:16px 0}.ms-calc .ms-row{grid-template-columns:1fr}}
+</style>
+
+<h3>만 나이 계산기</h3>
+<p class="ms-sub">생년월일을 넣으면 만 나이, 연 나이, 다음 생일까지 남은 날을 계산합니다.</p>
+
+<div class="ms-row">
+  <div><label for="ag-birth">생년월일</label><input id="ag-birth" type="date" value="1990-05-15"></div>
+  <div><label for="ag-base">기준일</label><input id="ag-base" type="date"></div>
+</div>
+
+<div class="ms-result" aria-live="polite">
+  <div class="ms-label">만 나이</div>
+  <div class="ms-big" id="ag-out">-</div>
+  <div class="ms-msg" id="ag-msg"></div>
+  <table>
+    <tr><td>연 나이 (현재 연도 − 출생연도)</td><td id="ag-year"></td></tr>
+    <tr><td>예전 세는 나이</td><td id="ag-korean"></td></tr>
+    <tr><td>다음 생일</td><td id="ag-next"></td></tr>
+    <tr><td>태어난 지</td><td id="ag-days"></td></tr>
+    <tr><td>띠</td><td id="ag-zodiac"></td></tr>
+  </table>
+</div>
+
+<p class="ms-note">
+· 2023년 6월 28일부터 법령·계약·공문서의 나이는 만 나이로 통일되었습니다. 생일이 지나면 한 살 늘어납니다.<br>
+· 청소년보호법(술·담배), 병역법, 초등학교 입학 등은 지금도 연 나이(현재 연도 − 출생연도)를 씁니다.<br>
+· 2월 29일생은 평년에는 3월 1일에 나이가 늘어나는 것으로 계산했습니다.
+</p>
+
+<script>
+(function(){
+  var root=document.getElementById('ms-age'); if(!root) return;
+  var Z=['원숭이','닭','개','돼지','쥐','소','호랑이','토끼','용','뱀','말','양'];
+  function $(id){return root.querySelector('#'+id);}
+  function parse(s){if(!s)return null;var a=s.split('-');return new Date(+a[0],a[1]-1,+a[2]);}
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  function bday(b,y){var d=new Date(y,b.getMonth(),b.getDate());if(d.getMonth()!==b.getMonth())d=new Date(y,2,1);return d;}
+  var DAY=864e5; $('ag-base').value=iso(new Date());
+  function calc(){
+    var b=parse($('ag-birth').value), t=parse($('ag-base').value);
+    if(!b||!t||t<b){$('ag-out').textContent='-';$('ag-msg').innerHTML='<span class="ms-warn">날짜를 확인하세요.</span>';return;}
+    var age=t.getFullYear()-b.getFullYear(); if(t<bday(b,t.getFullYear())) age--;
+    var next=bday(b,t.getFullYear()); if(next<=t) next=bday(b,t.getFullYear()+1);
+    var left=Math.round((next-t)/DAY), lived=Math.round((t-b)/DAY);
+    var isToday= bday(b,t.getFullYear()).getTime()===t.getTime();
+    $('ag-out').textContent='만 '+age+'세';
+    $('ag-msg').textContent= isToday?'오늘이 생일입니다! 🎂':'다음 생일까지 '+left+'일 남았습니다.';
+    $('ag-year').textContent=(t.getFullYear()-b.getFullYear())+'세';
+    $('ag-korean').textContent=(t.getFullYear()-b.getFullYear()+1)+'세';
+    $('ag-next').textContent=iso(next)+' (만 '+(age+1)+'세, D-'+left+')';
+    $('ag-days').textContent=(lived+1).toLocaleString('ko-KR')+'일째';
+    $('ag-zodiac').textContent=Z[b.getFullYear()%12]+'띠 (양력 출생연도 기준)';
+  }
+  root.addEventListener('input',calc);
+  root.addEventListener('change',calc);
+  calc();
+})();
+</script>
+</div>
+<p class="site-foot">생활 계산기 모음 · 계산 결과는 참고용 추정치입니다.</p>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4대보험 계산기 | 생활 계산기 모음</title>
+<meta name="description" content="월급을 넣으면 국민연금·건강보험·장기요양·고용보험의 근로자와 사업주 부담금을 계산합니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="생활 계산기 모음">
+<meta property="og:title" content="4대보험 계산기 | 생활 계산기 모음">
+<meta property="og:description" content="월급을 넣으면 국민연금·건강보험·장기요양·고용보험의 근로자와 사업주 부담금을 계산합니다.">
+<meta property="og:locale" content="ko_KR">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:4px 16px 40px;background:#f6f8fa}
+.site-nav{max-width:560px;margin:16px auto 0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+.site-nav a{color:#1f6feb;text-decoration:none;font-weight:600}
+.site-nav a:hover{text-decoration:underline}
+.site-foot{max-width:760px;margin:24px auto 0;text-align:center;color:#8a95a3;font:12px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a href="./">← 전체 계산기 보기</a></nav>
+<div class="ms-calc" id="ms-4ins">
+<style>
+.ms-calc{--ms-accent:#1f6feb;--ms-bg:#fff;--ms-soft:#f4f7fb;--ms-line:#dde3ea;--ms-text:#1d2733;--ms-muted:#5f6b7a;--ms-warn:#b54708;
+  max-width:560px;margin:24px auto;padding:20px;border:1px solid var(--ms-line);border-radius:14px;background:var(--ms-bg);color:var(--ms-text);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;font-size:15px;line-height:1.5;box-sizing:border-box}
+.ms-calc *{box-sizing:border-box}
+.ms-calc h3{margin:0 0 4px;font-size:20px}
+.ms-calc .ms-sub{margin:0 0 16px;color:var(--ms-muted);font-size:13px}
+.ms-calc .ms-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.ms-calc label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.ms-calc input,.ms-calc select{width:100%;padding:10px 12px;border:1px solid var(--ms-line);border-radius:8px;font-size:16px;background:#fff;color:var(--ms-text)}
+.ms-calc input:focus,.ms-calc select:focus{outline:2px solid var(--ms-accent);outline-offset:-1px;border-color:transparent}
+.ms-calc .ms-seg{display:flex;gap:6px;margin-bottom:12px}
+.ms-calc .ms-seg button{flex:1;padding:9px;border:1px solid var(--ms-line);border-radius:8px;background:#fff;font-size:14px;cursor:pointer;color:var(--ms-text)}
+.ms-calc .ms-seg button[aria-pressed="true"]{background:var(--ms-accent);border-color:var(--ms-accent);color:#fff;font-weight:600}
+.ms-calc .ms-result{margin-top:16px;padding:16px;border-radius:10px;background:var(--ms-soft)}
+.ms-calc .ms-big{font-size:26px;font-weight:700;color:var(--ms-accent);font-variant-numeric:tabular-nums}
+.ms-calc table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.ms-calc th{font-size:12px;color:var(--ms-muted);font-weight:600;text-align:right;padding:4px 0}
+.ms-calc th:first-child{text-align:left}
+.ms-calc td{padding:7px 0;border-top:1px solid var(--ms-line);text-align:right;font-variant-numeric:tabular-nums}
+.ms-calc td:first-child{text-align:left}
+.ms-calc td small{display:block;color:var(--ms-muted);font-size:11.5px}
+.ms-calc tr.ms-sum td{font-weight:700;border-top:2px solid var(--ms-text)}
+.ms-calc details{margin-top:12px}
+.ms-calc summary{cursor:pointer;font-size:13.5px;font-weight:600}
+.ms-calc .ms-note{margin-top:12px;font-size:12.5px;color:var(--ms-muted)}
+@media (max-width:480px){.ms-calc{padding:16px;margin:16px 0}.ms-calc .ms-row{grid-template-columns:1fr}.ms-calc table{font-size:13px}}
+</style>
+
+<h3>4대보험 계산기</h3>
+<p class="ms-sub">월급에서 빠지는 국민연금·건강보험·장기요양·고용보험을 계산합니다.</p>
+
+<label>급여 입력 방식</label>
+<div class="ms-seg" role="group">
+  <button type="button" data-mode="month" aria-pressed="true">월급</button>
+  <button type="button" data-mode="year" aria-pressed="false">연봉</button>
+</div>
+
+<div class="ms-row">
+  <div><label for="ins-pay" id="ins-paylabel">월급 (세전, 원)</label><input id="ins-pay" type="text" inputmode="numeric" value="3,000,000"></div>
+  <div><label for="ins-free">비과세 (식대 등, 월)</label><input id="ins-free" type="text" inputmode="numeric" value="200,000"></div>
+</div>
+
+<div class="ms-row">
+  <div>
+    <label for="ins-period">적용 기간</label>
+    <select id="ins-period">
+      <option value="26a">2026년 1~6월</option>
+      <option value="26b" selected>2026년 7~12월</option>
+      <option value="27">2027년</option>
+    </select>
+  </div>
+  <div>
+    <label for="ins-size">회사 규모 (회사 부담분용)</label>
+    <select id="ins-size">
+      <option value="0.0025">150인 미만</option>
+      <option value="0.0045">150인 이상 우선지원대상</option>
+      <option value="0.0065">150~999인</option>
+      <option value="0.0085">1,000인 이상·국가기관</option>
+    </select>
+  </div>
+</div>
+
+<div class="ms-result" aria-live="polite">
+  <div style="font-size:13px;color:var(--ms-muted)">근로자 월 부담 합계</div>
+  <div class="ms-big" id="ins-out">0원</div>
+  <div style="font-size:13.5px;margin-top:2px" id="ins-base"></div>
+  <table>
+    <thead><tr><th>항목</th><th>근로자</th><th>회사</th></tr></thead>
+    <tbody>
+      <tr><td>국민연금<small id="ins-r-np"></small></td><td id="ins-np-e"></td><td id="ins-np-c"></td></tr>
+      <tr><td>건강보험<small id="ins-r-hi"></small></td><td id="ins-hi-e"></td><td id="ins-hi-c"></td></tr>
+      <tr><td>장기요양<small id="ins-r-lt"></small></td><td id="ins-lt-e"></td><td id="ins-lt-c"></td></tr>
+      <tr><td>고용보험<small id="ins-r-ei"></small></td><td id="ins-ei-e"></td><td id="ins-ei-c"></td></tr>
+      <tr class="ms-sum"><td>합계</td><td id="ins-sum-e"></td><td id="ins-sum-c"></td></tr>
+    </tbody>
+  </table>
+  <details>
+    <summary>산재보험 포함해서 회사 부담 보기</summary>
+    <div style="margin-top:8px">
+      <label for="ins-ia">산재보험료율 (%, 업종별 · 회사가 전액 부담)</label>
+      <input id="ins-ia" type="number" min="0" max="20" step="0.01" placeholder="예: 0.7">
+      <div style="margin-top:6px;font-size:13.5px">산재보험 <b id="ins-ia-c">0원</b> · 회사 부담 총계 <b id="ins-sum-c2">0원</b></div>
+    </div>
+  </details>
+</div>
+
+<p class="ms-note">
+· 4대보험은 비과세(식대 월 20만 원 등)를 뺀 금액을 기준으로 계산합니다.<br>
+· 국민연금은 기준소득월액 상·하한(2026년 1~6월 40만~637만 원, 2026년 7월~2027년 6월 41만~659만 원)을 적용하고 1천 원 미만을 버립니다.<br>
+· 요율: 국민연금 2026년 9.5%·2027년 10%, 건강보험 7.19%(2027년 동결), 장기요양 소득 대비 2026년 0.9448%·2027년 0.9994%, 고용보험 근로자 0.9%. 각 보험료는 10원 미만을 버린 예상치이며, 실제 고지액은 정산·감면 등에 따라 조금 다를 수 있습니다.
+</p>
+
+<script>
+(function(){
+  var root=document.getElementById('ms-4ins'); if(!root) return;
+  var P={
+    '26a':{np:0.095,lo:400000,hi:6370000,hi_r:0.0719,lt:0.009448},
+    '26b':{np:0.095,lo:410000,hi:6590000,hi_r:0.0719,lt:0.009448},
+    '27': {np:0.100,lo:410000,hi:6590000,hi_r:0.0719,lt:0.009994}
+  };
+  var EI=0.009, mode='month';
+  function $(id){return root.querySelector('#'+id);}
+  function num(v){return Number(String(v).replace(/[^0-9.]/g,''))||0;}
+  function f10(n){return Math.floor(n/10+1e-9)*10;}
+  function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+  function pct(r){return (Math.round(r*100000)/1000)+'%';}
+  function fmt(el){var n=num(el.value); el.value = n ? Math.floor(n).toLocaleString('ko-KR') : '';}
+  function calc(){
+    var p=P[$('ins-period').value];
+    var pay=num($('ins-pay').value); if(mode==='year') pay=pay/12;
+    var base=Math.max(0,pay-num($('ins-free').value));
+    // 국민연금
+    var npBase=Math.floor(Math.min(Math.max(base,p.lo),p.hi)/1000)*1000;
+    if(base===0) npBase=0;
+    var npE=f10(npBase*p.np/2), npC=npE;
+    // 건강보험·장기요양
+    var hiE=f10(base*p.hi_r/2), hiC=hiE;
+    var ltRatio=p.lt/p.hi_r;
+    var ltE=f10(hiE*ltRatio), ltC=ltE;
+    // 고용보험
+    var eiE=f10(base*EI), eiC=f10(base*(EI+Number($('ins-size').value)));
+    var sumE=npE+hiE+ltE+eiE, sumC=npC+hiC+ltC+eiC;
+    var ia=f10(base*num($('ins-ia').value)/100);
+    $('ins-out').textContent=won(sumE);
+    $('ins-base').textContent='보험료 기준 월 보수 '+won(base)+' · 공제 후 '+won(Math.max(0,pay-sumE))+' (소득세 별도)';
+    $('ins-r-np').textContent='각 '+pct(p.np/2)+(npBase!==base&&base>0?' · 기준 '+won(npBase):'');
+    $('ins-r-hi').textContent='각 '+pct(p.hi_r/2);
+    $('ins-r-lt').textContent='건보료의 '+(Math.round(ltRatio*10000)/100)+'%';
+    $('ins-r-ei').textContent='근로자 0.9% · 회사 '+pct(EI+Number($('ins-size').value));
+    $('ins-np-e').textContent=won(npE); $('ins-np-c').textContent=won(npC);
+    $('ins-hi-e').textContent=won(hiE); $('ins-hi-c').textContent=won(hiC);
+    $('ins-lt-e').textContent=won(ltE); $('ins-lt-c').textContent=won(ltC);
+    $('ins-ei-e').textContent=won(eiE); $('ins-ei-c').textContent=won(eiC);
+    $('ins-sum-e').textContent=won(sumE); $('ins-sum-c').textContent=won(sumC);
+    $('ins-ia-c').textContent=won(ia); $('ins-sum-c2').textContent=won(sumC+ia);
+  }
+  root.querySelectorAll('.ms-seg button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var prev=mode; mode=b.getAttribute('data-mode');
+      root.querySelectorAll('.ms-seg button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+      $('ins-paylabel').textContent = mode==='month'?'월급 (세전, 원)':'연봉 (세전, 원)';
+      if(prev!==mode){ var n=num($('ins-pay').value); $('ins-pay').value=Math.round(mode==='year'?n*12:n/12).toLocaleString('ko-KR'); }
+      calc();
+    });
+  });
+  ['ins-pay','ins-free'].forEach(function(id){$(id).addEventListener('input',function(){fmt(this);calc();});});
+  ['ins-period','ins-size'].forEach(function(id){$(id).addEventListener('change',calc);});
+  $('ins-ia').addEventListener('input',calc);
+  calc();
+})();
+</script>
+</div>
+<p class="site-foot">생활 계산기 모음 · 계산 결과는 참고용 추정치입니다.</p>
+</body>
+</html>

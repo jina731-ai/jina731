@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>취득세 계산기 | 생활 계산기 모음</title>
+<meta name="description" content="집값·주택 수·면적으로 취득세, 지방교육세, 농특세를 계산합니다. 생애최초 감면 반영.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="생활 계산기 모음">
+<meta property="og:title" content="취득세 계산기 | 생활 계산기 모음">
+<meta property="og:description" content="집값·주택 수·면적으로 취득세, 지방교육세, 농특세를 계산합니다. 생애최초 감면 반영.">
+<meta property="og:locale" content="ko_KR">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:4px 16px 40px;background:#f6f8fa}
+.site-nav{max-width:560px;margin:16px auto 0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+.site-nav a{color:#1f6feb;text-decoration:none;font-weight:600}
+.site-nav a:hover{text-decoration:underline}
+.site-foot{max-width:760px;margin:24px auto 0;text-align:center;color:#8a95a3;font:12px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a href="./">← 전체 계산기 보기</a></nav>
+<div class="ms-calc" id="ms-acq">
+<style>
+.ms-calc{--ms-accent:#1f6feb;--ms-soft:#f4f7fb;--ms-line:#dde3ea;--ms-text:#1d2733;--ms-muted:#5f6b7a;--ms-warn:#b54708;max-width:560px;margin:24px auto;padding:20px;border:1px solid var(--ms-line);border-radius:14px;background:#fff;color:var(--ms-text);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;font-size:15px;line-height:1.5;box-sizing:border-box}
+.ms-calc *{box-sizing:border-box}.ms-calc [hidden]{display:none!important}
+.ms-calc h3{margin:0 0 4px;font-size:20px}
+.ms-calc .ms-sub{margin:0 0 16px;color:var(--ms-muted);font-size:13px}
+.ms-calc .ms-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.ms-calc label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.ms-calc label.ms-chk{display:flex;gap:8px;align-items:center;font-weight:500;font-size:14px;margin-bottom:10px}
+.ms-calc label.ms-chk input{width:auto;margin:0}
+.ms-calc input,.ms-calc select{width:100%;padding:10px 12px;border:1px solid var(--ms-line);border-radius:8px;font-size:16px;background:#fff;color:var(--ms-text);font-family:inherit}
+.ms-calc input:focus,.ms-calc select:focus{outline:2px solid var(--ms-accent);outline-offset:-1px;border-color:transparent}
+.ms-calc .ms-result{margin-top:16px;padding:16px;border-radius:10px;background:var(--ms-soft)}
+.ms-calc .ms-label{font-size:13px;color:var(--ms-muted)}
+.ms-calc .ms-big{font-size:26px;font-weight:700;color:var(--ms-accent);font-variant-numeric:tabular-nums}
+.ms-calc .ms-msg{font-size:13.5px;margin-top:4px}
+.ms-calc table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.ms-calc td{padding:7px 0;border-top:1px solid var(--ms-line);text-align:right;font-variant-numeric:tabular-nums}
+.ms-calc td:first-child{text-align:left}
+.ms-calc td small{display:block;color:var(--ms-muted);font-size:11.5px}
+.ms-calc tr.ms-sum td{font-weight:700;border-top:2px solid var(--ms-text)}
+.ms-calc .ms-note{margin-top:12px;font-size:12.5px;color:var(--ms-muted)}
+@media (max-width:480px){.ms-calc{padding:16px;margin:16px 0}.ms-calc .ms-row{grid-template-columns:1fr}}
+</style>
+
+<h3>취득세 계산기</h3>
+<p class="ms-sub">집이나 부동산을 살 때 내는 취득세·지방교육세·농어촌특별세를 계산합니다.</p>
+
+<div class="ms-row">
+  <div>
+    <label for="aq-kind">취득 유형</label>
+    <select id="aq-kind">
+      <option value="house">주택 매매 (유상취득)</option>
+      <option value="other">주택 외 매매 (토지·상가·오피스텔 등)</option>
+      <option value="gift">주택 증여</option>
+      <option value="inherit">상속 (농지 외)</option>
+    </select>
+  </div>
+  <div><label for="aq-price">취득가액 (원)</label><input id="aq-price" class="ms-money" type="text" inputmode="numeric" value="500,000,000"></div>
+</div>
+<div id="aq-housebox">
+  <div class="ms-row">
+    <div>
+      <label for="aq-count">취득 후 주택 수 (세대 기준)</label>
+      <select id="aq-count"><option value="1">1주택</option><option value="2">2주택</option><option value="3">3주택</option><option value="4">4주택 이상</option></select>
+    </div>
+    <div>
+      <label for="aq-area">전용면적</label>
+      <select id="aq-area"><option value="small">85㎡ 이하</option><option value="large">85㎡ 초과</option></select>
+    </div>
+  </div>
+  <label class="ms-chk"><input id="aq-adj" type="checkbox"> 조정대상지역에 있는 주택</label>
+  <label class="ms-chk" id="aq-firstbox"><input id="aq-first" type="checkbox"> 생애최초 주택 구입 (12억 원 이하, 최대 200만 원 감면)</label>
+</div>
+
+<div class="ms-result" aria-live="polite">
+  <div class="ms-label">총 납부세액</div>
+  <div class="ms-big" id="aq-out">0원</div>
+  <div class="ms-msg" id="aq-msg"></div>
+  <table>
+    <tr><td>취득세<small id="aq-r1"></small></td><td id="aq-t1"></td></tr>
+    <tr><td>지방교육세<small id="aq-r2"></small></td><td id="aq-t2"></td></tr>
+    <tr><td>농어촌특별세<small id="aq-r3"></small></td><td id="aq-t3"></td></tr>
+    <tr id="aq-redrow"><td>생애최초 감면</td><td id="aq-t4"></td></tr>
+    <tr class="ms-sum"><td>합계</td><td id="aq-sum"></td></tr>
+  </table>
+</div>
+
+<p class="ms-note">
+· 주택 매매 1~3%: 6억 원 이하 1%, 6억~9억 원은 (취득가 × 2/3억 − 3)%, 9억 원 초과 3%.<br>
+· 다주택 중과: 조정대상지역 2주택 8%·3주택 이상 12%, 비조정지역 3주택 8%·4주택 이상 12%. 일시적 2주택(기존 주택을 기한 안에 처분)은 일반세율이 적용됩니다.<br>
+· 증여: 3.5% (조정대상지역 3억 원 이상 주택은 12%, 1세대 1주택자가 배우자·직계존비속에게 증여하면 3.5%). 상속: 2.8%. 주택 외 매매: 4%.<br>
+· 주택은 시가표준액이 1억 원 이하이면 중과가 빠지는 등 예외가 많습니다. 신고 전 위택스나 관할 구청에서 확인하세요.
+</p>
+
+<script>
+(function(){
+  var root=document.getElementById('ms-acq'); if(!root) return;
+  function $(id){return root.querySelector('#'+id);}
+  function num(v){return Number(String(v).replace(/[^0-9.]/g,''))||0;}
+  function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+  function pct(r){return (Math.round(r*1e6)/1e4)+'%';}
+  function calc(){
+    var kind=$('aq-kind').value, P=num($('aq-price').value), cnt=+$('aq-count').value, adj=$('aq-adj').checked, large=$('aq-area').value==='large';
+    $('aq-housebox').hidden= kind==='other'||kind==='inherit';
+    root.querySelector('label[for="aq-count"]').textContent= kind==='gift'?'증여하는 사람의 주택 수':'취득 후 주택 수 (세대 기준)';
+    var r, edu, rural, note='';
+    if(kind==='house'){
+      var heavy = adj ? (cnt>=3?.12:cnt===2?.08:0) : (cnt>=4?.12:cnt===3?.08:0);
+      if(heavy){ r=heavy; edu=.004; rural= large?(heavy===.08?.006:.01):0; note='다주택 중과세율 적용'; }
+      else {
+        r= P<=6e8?.01 : P<=9e8? Math.round((P*2/3e8-3)*100)/1e4 : .03;
+        edu=r*.1; rural= large?.002:0; note='일반세율 적용';
+      }
+    } else if(kind==='gift'){
+      var gh = adj && P>=3e8 && cnt>=2;
+      r= gh?.12:.035; edu= gh?.004:.003; rural= gh?(large?.01:0):(large?.002:0); note= gh?'조정대상지역 증여 중과':'증여 일반세율';
+    } else if(kind==='inherit'){ r=.028; edu=.0016; rural=.002; note='상속 (무주택자의 1주택 상속은 감면 가능)'; }
+    else { r=.04; edu=.004; rural=.002; note='주택 외 일반 세율'; }
+    var t1=Math.floor(P*r), t2=Math.floor(P*edu), t3=Math.floor(P*rural);
+    var firstOK = kind==='house' && cnt===1 && P<=12e8;
+    $('aq-firstbox').hidden = !(kind==='house');
+    var red = firstOK && $('aq-first').checked ? Math.min(t1,2e6) : 0;
+    $('aq-redrow').hidden = red===0;
+    var sum=t1+t2+t3-red;
+    $('aq-out').textContent=won(sum);
+    $('aq-msg').textContent=note+' · 실효세율 '+(P?pct(sum/P):'0%') + ($('aq-first').checked&&kind==='house'&&!firstOK?' · 생애최초 감면 조건(1주택, 12억 원 이하)에 맞지 않습니다':'');
+    $('aq-r1').textContent=pct(r);$('aq-r2').textContent=pct(edu);$('aq-r3').textContent= rural?pct(rural):'비과세 (85㎡ 이하 주택)';
+    if(kind!=='house'&&kind!=='gift') $('aq-r3').textContent=pct(rural);
+    $('aq-t1').textContent=won(t1);$('aq-t2').textContent=won(t2);$('aq-t3').textContent=won(t3);$('aq-t4').textContent='-'+won(red);$('aq-sum').textContent=won(sum);
+  }
+  root.addEventListener('input',function(e){if(e.target.classList.contains('ms-money')){var n=num(e.target.value);e.target.value=n?Math.floor(n).toLocaleString('ko-KR'):'';}calc();});
+  root.addEventListener('change',calc);
+  calc();
+})();
+</script>
+</div>
+<p class="site-foot">생활 계산기 모음 · 계산 결과는 참고용 추정치입니다.</p>
+</body>
+</html>
